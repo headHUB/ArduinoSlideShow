@@ -1,0 +1,14 @@
+
+This sketch expects to be running on an ATmega328 connected to an Adafruit 1.8" LCD (using the Adafruit_ST7735 library) on the default high-speed SPI pins, with the backlight on pin 7.
+
+It looks for 16-bit raw format images in the "slides" directory of the SD card (on the LCD breakout board), and displays a random image for 10 seconds.
+
+The images in the "slides" directory must be in a specific raw format, since the ATmega328 doesn't have the power to decode JPEGs.  The prepare.sh script uses ImageMagick, an open source tool, to convert JPEGs to the correct format.
+
+In the same directory as prepare.sh, create an "images" directory, and fill it with the photos you would like to convert.
+
+The prepare script will create a "slides" directory (after deleting any existing directory of that name) and fill it with the raw files. This directory can be copied to the SD card.
+
+The SD library does not, as far as I could determine, provide a way to efficiently count how many files are in a directory, or to load the Nth file from a directory.  To work around this, the sketch looks for a "slides.dat" file in the "slides" folder, and generates it if it doesn't find it.  This means any time the contents of the "slides" directory changes, the "slides.dat" file needs to be deleted.
+
+
